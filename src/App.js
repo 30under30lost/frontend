@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://lead-management-backend-pcux.onrender.com/api';
 
 // Login Component
 function Login({ onLogin }) {
