@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
 const API_URL = 'https://lead-management-backend-pcux.onrender.com/api';
@@ -68,38 +68,35 @@ function AdminDashboard({ token, username, onLogout }) {
   const [modalType, setModalType] = useState('');
   const [editItem, setEditItem] = useState(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-  fetchLeads();
-  fetchBuilders();
-  fetchProperties();
-}, []);
-
-
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     const res = await fetch(`${API_URL}/admin/leads`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
     setLeads(data);
-  };
+  }, [token]);
 
-  const fetchBuilders = async () => {
+  const fetchBuilders = useCallback(async () => {
     const res = await fetch(`${API_URL}/admin/builders`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
     setBuilders(data);
-  };
+  }, [token]);
 
-  const fetchProperties = async () => {
+  const fetchProperties = useCallback(async () => {
     const res = await fetch(`${API_URL}/admin/properties`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
     setProperties(data);
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchLeads();
+    fetchBuilders();
+    fetchProperties();
+  }, [fetchLeads, fetchBuilders, fetchProperties]);
 
   const openModal = (type, item = null) => {
     setModalType(type);
@@ -276,28 +273,26 @@ function BuilderDashboard({ token, username, onLogout }) {
   const [leads, setLeads] = useState([]);
   const [properties, setProperties] = useState([]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-  fetchLeads();
-  fetchProperties();
-}, []);
-
-
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     const res = await fetch(`${API_URL}/builder/leads`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
     setLeads(data);
-  };
+  }, [token]);
 
-  const fetchProperties = async () => {
+  const fetchProperties = useCallback(async () => {
     const res = await fetch(`${API_URL}/builder/properties`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
     setProperties(data);
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchLeads();
+    fetchProperties();
+  }, [fetchLeads, fetchProperties]);
 
   const downloadCSV = () => {
     const headers = ['Name', 'Location', 'Interested In', 'Phone Number', 'Status', 'Property', 'Comments', 'Created At'];
