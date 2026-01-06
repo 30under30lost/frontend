@@ -68,11 +68,14 @@ function AdminDashboard({ token, username, onLogout }) {
   const [modalType, setModalType] = useState('');
   const [editItem, setEditItem] = useState(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(() => {
-    fetchLeads();
-    fetchBuilders();
-    fetchProperties();
-  }, []);
+  fetchLeads();
+  fetchBuilders();
+  fetchProperties();
+}, []);
+
 
   const fetchLeads = async () => {
     const res = await fetch(`${API_URL}/admin/leads`, {
@@ -273,10 +276,12 @@ function BuilderDashboard({ token, username, onLogout }) {
   const [leads, setLeads] = useState([]);
   const [properties, setProperties] = useState([]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    fetchLeads();
-    fetchProperties();
-  }, []);
+  fetchLeads();
+  fetchProperties();
+}, []);
+
 
   const fetchLeads = async () => {
     const res = await fetch(`${API_URL}/builder/leads`, {
